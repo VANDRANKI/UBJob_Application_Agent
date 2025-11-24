@@ -1,10 +1,8 @@
 import os
 from dotenv import load_dotenv
 
-# Load environment variables from .env at project root
 load_dotenv()
 
-# CREDENTIALS
 USERNAME = os.getenv("UB_USERNAME", "")
 PASSWORD = os.getenv("UB_PASSWORD", "")
 LOGIN_URL = os.getenv("UB_LOGIN_URL", "https://www.ubjobs.buffalo.edu/")
@@ -12,20 +10,16 @@ LOGIN_URL = os.getenv("UB_LOGIN_URL", "https://www.ubjobs.buffalo.edu/")
 if not USERNAME or not PASSWORD:
     print("WARNING: UB_USERNAME or UB_PASSWORD not set in .env")
     
-# PATHS
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 LOGS_DIR = os.path.join(BASE_DIR, "logs")
 RESUMES_DIR = os.path.join(BASE_DIR, "resumes")
 GENERATED_DOCS_DIR = os.path.join(BASE_DIR, "generated_docs")
 
-# Ensure directories exist
 os.makedirs(LOGS_DIR, exist_ok=True)
 os.makedirs(RESUMES_DIR, exist_ok=True)
 os.makedirs(GENERATED_DOCS_DIR, exist_ok=True)
 
-# USER DATA
 PERSONAL_INFO = {
-    # BASIC INFO
     "first_name": "Prabhu Kiran",
     "last_name": "Vandranki",
     "preferred_name": "Prabhu",
@@ -81,7 +75,6 @@ PERSONAL_INFO = {
             "end_date": "current Position",
             "title": "Ultra-Super-Duper-Research-Wizard",
 
-            # EXACT DUTIES (WORD FOR WORD)
             "duties": (
                 "Data Analysis & Optimization:\n"
                 "- Did some top-secret xxxxxxxyyyyyyyy wizard-level data stuff.\n"
@@ -101,7 +94,6 @@ PERSONAL_INFO = {
             "supervisor": "Professor XXXXXXXXXY",
             "supervisor_title": "Supreme-Overlord-of-Science-and-Engineering",
 
-            # EXACT REASON FOR LEAVING
             "reason_leaving": "Didn’t leave yet, but the contract ends on ZZZZ-date (yes, festive exit vibes).",
 
             "contact_employer": "Yes"
@@ -198,13 +190,12 @@ PERSONAL_INFO = {
     "veteran_status": "I am not a protected veteran",
 }
 
-# RESUME PATHS (Placeholders)
+# RESUME PATHS
 RESUME_PATHS = {
     "DATA": os.path.join(RESUMES_DIR, "Resume_Data.pdf"),
     "RESEARCH": os.path.join(RESUMES_DIR, "Resume_Research.pdf"),
     "ASSOCIATE": os.path.join(RESUMES_DIR, "Resume_Associate.pdf")
 }
 
-# SETTINGS
-HEADLESS = False # Set to True for production
+HEADLESS = False # Set to True for Dry Run in production, I kept it False for now to see the browser actions
 CHECK_FREQUENCY_HOURS = 24

@@ -9,35 +9,39 @@ KEYWORDS = {
             "Quantitative", "Statistical", "Database Analyst"
         ],
         "skills": [
-            "Python", "SQL", "R", "Tableau", "Power BI", "data modeling", 
-            "statistical analysis", "machine learning", "data pipelines", "ETL",
+            "Python", "SQL", "R", "Tableau", "Power BI", "data modeling", "data analysis", "NLP",
+            "deep learning", "data visualization", "big data", "Hadoop", "Spark", "data cleaning",
+            "statistical analysis", "machine learning", "data pipelines", "ETL", "ML", "DL", "NN",
+            "artificial intelligence", "AI", "data science", "predictive modeling",
             "data warehousing", "predictive analytics", "data mining", "visualization"
         ]
     },
     "RESEARCH": {
         "role_types": [
-            "Research Associate", "Research Scientist", "Materials Scientist",
+            "Research Associate", "Research Scientist", "Materials Scientist", "Academic Researcher",
+            "Research Engineer",  "Research Fellow",
             "Chemical Engineer", "Laboratory Technician", "Postdoctoral",
             "Research Specialist", "Technical Specialist", "Process Engineer",
             "Quality Engineer"
         ],
         "skills": [
             "materials science", "nanotechnology", "CMP", "chemical mechanical planarization",
-            "laboratory", "experimental design", "characterization", "microscopy",
+            "laboratory", "experimental design", "characterization", "microscopy", "Slurry Analysis",
+            "XRD", "SEM", "TEM", "AFM", "data analysis",
             "synthesis", "process optimization", "publications", "life cycle assessment",
             "sustainability"
         ]
     },
     "Associate": {
         "role_types": [
-            "Program Associate", "Project Coordinator", "Administrative",
-            "Operations Associate", "Technical Support", "Program Manager",
+            "Program Associate", "Project Coordinator", "Administrative", "Office Analyst", "Donar Analyst",
+            "Operations Associate", "Technical Support", "Program Manager", "Database Coordinator",
             "Research Administrator", "Academic Advisor", "Student Services",
             "Grant Writer"
         ],
         "skills": [
-            "project management", "coordination", "administration", "stakeholder",
-            "documentation", "process improvement", "support services",
+            "project management", "coordination", "administration", "stakeholder", "analyst", "communication",
+            "documentation", "process improvement", "support services", "Office Analysis", "Excel Engineer",
             "program development", "grant administration"
         ]
     }

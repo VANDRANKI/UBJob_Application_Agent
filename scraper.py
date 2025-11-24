@@ -53,7 +53,7 @@ def scrape_jobs(page):
     
     new_jobs = []
     
-    # Limit to 10 for testing
+    # Limit to 10 for testing, will increase for the real testing
     for job_id, job_info in list(unique_jobs.items())[:10]:
         link = job_info['href']
         title = job_info['title']

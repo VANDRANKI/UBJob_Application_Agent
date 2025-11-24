@@ -28,13 +28,12 @@ def apply_to_job(page: Page, job_data, resume_path, cover_letter_path, personal_
         # Check if we need to login again (sometimes session expires)
         if "login" in page.url:
             print("Redirected to login. Please ensure auth is persistent.")
-            # In a real run, we'd handle re-login. For now, assume session is valid.
             
         # Form Filling Logic
         print("Filling application form...")
         
         # 1. Personal Information (Usually pre-filled or standard fields)
-        # We'll attempt to fill standard fields if they exist and are empty
+        # We'll first attempt to fill standard fields if they exist and are empty
         try:
             page.fill("input[name*='first_name']", personal_info['first_name'])
             page.fill("input[name*='last_name']", personal_info['last_name'])
@@ -103,7 +102,7 @@ def apply_to_job(page: Page, job_data, resume_path, cover_letter_path, personal_
                 except Exception as e:
                     print(f"Error filling employment: {e}")
 
-        # 4. References
+        # 4. Refs
         if "references" in personal_info:
             print("Filling References...")
             for ref in personal_info["references"]:
@@ -154,7 +153,6 @@ def apply_to_job(page: Page, job_data, resume_path, cover_letter_path, personal_
         # Submit the application
         print("Submitting application...")
         # Note: We use a broad selector to catch 'Submit', 'Submit Application', etc.
-        # In production, verify this selector is unique to the final submit button.
         page.click("input[type='submit'][value='Submit Application'], button:has-text('Submit Application'), input[value='Submit']")
         
         page.wait_for_load_state("networkidle")
