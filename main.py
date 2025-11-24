@@ -13,12 +13,10 @@ from .generator import generate_cover_letter
 def main():
     print("Starting UB Job Application Agent...")
     
-    # Check for missing data
     missing_data = []
     if not PERSONAL_INFO["email"]:
         missing_data.append("Personal Info (Email, etc.)")
     
-    # Check resumes
     for name, path in RESUME_PATHS.items():
         if not os.path.exists(path):
             missing_data.append(f"Resume: {name} ({path})")
