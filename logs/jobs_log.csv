@@ -1,0 +1,22 @@
+Date_Discovered,Job_ID,Job_Title,Department,Resume_Type,Fail/Success(Dry Run),Status,Confirmation_Num,Deadline,Notes
+11/21/2025 10:07,F240010,Visiting Assistant Librarian,Library,Research,Fail,Failed (Dry Run),N/A,Posting closed,Incomplete - Posting closed
+11/22/2025 19:49,R250153,"Programmer, Pediatrics, Division of Behavioral Medicine","Pediatrics, Division of Behavioral Medicine",Data,Fail,Failed (Dry Run),N/A,N/A,Incomplete - Application & Resume submitted only
+11/21/2025 10:43,F250116,"Associate Dean for Assessment, Evaluation, and Accreditation","Assessment, Evaluation, and Accreditation",Associate,Fail,Failed (Dry Run),N/A,N/A,Incomplete - Application only
+11/22/2025 10:44,R250006,Research Support Specialist,The University at Buffalo,Research,Success,Applied (Dry Run),CN000485583,Open Until Filled,In Progress
+11/21/2025 11:19,P240420,Data Manager and Statistical Analyst,University,Data,Success,Applied (Dry Run),CN000487516,N/A,In Progress
+11/22/2025 13:47,R250144,"Administrative Associate, Planned Giving",Planned Giving,Associate,Success,Archived (Dry Run),CN000487521,N/A,Not Selected
+11/21/2025 12:58,R250128,Health Data Manager/Analyst,Health Sciences,Data,Success,Applied (Dry Run),CN000487526,N/A,In Progress
+11/22/2025 17:02,P250225,"Liaison IT User Support, Office of Medical Computing",Office of Medical Computing,Data,Success,Applied (Dry Run),CN000487819,N/A,In Progress
+11/21/2025 13:05,U250078,"Prospect Research Analyst, University Advancement",University Advancement,Data,Success,Applied (Dry Run),CN000488733,N/A,In Progress
+11/21/2025 19:57,P250216,"Data Analyst, Financial Aid",Financial Aid,Data,Success,Applied (Dry Run),CN000489820,N/A,In Progress
+11/21/2025 14:27,R250123,"Programmer/Analyst, Pharmaceutical Sciences",Pharmaceutical Sciences,Data,Success,Applied (Dry Run),CN000489873,N/A,In Progress
+11/22/2025 17:03,P250250,Project Accountant,Finance/Accounting,Associate,Success,Applied (Dry Run),CN000492416,N/A,In Progress
+11/21/2025 15:41,R250170,CHIL Data Collection Coordinator,CHIL (Community Health & Intervention Lab),Research,Success,Applied (Dry Run),CN000494246,N/A,In Progress
+11/20/2025 16:25,U250092,"Application Analyst, UB Foundation, Inc.","UB Foundation, Inc.",Data,Success,Applied (Dry Run),CN000495753,N/A,In Progress
+11/21/2025 16:12,R250185,Data Manager/Statistician,Research/Statistics,Data,Success,Applied (Dry Run),CN000497833,N/A,In Progress
+11/20/2025 16:25,C250102,"Office Assistant 1, Undergraduate Admissions (NY HELPS)",Undergraduate Admissions,Associate,Success,Archived (Dry Run),CN000487498,N/A,Position Filled
+11/21/2025 17:36,P240347,Temporary Staff Assistant,General Administration,Associate,Success,Archived (Dry Run),CN000487497,N/A,Position Filled
+11/21/2025 10:22,P250204,Human Resources Assistant,Human Resources,Associate,Success,Archived (Dry Run),CN000487509,N/A,Position Filled
+11/21/2025 18:09,P250220,"Curriculum Assistant, Department of Biochemistry",Department of Biochemistry,Associate,Success,Archived (Dry Run),CN000487512,N/A,Position Filled
+11/20/2025 16:25,P250228,Associate Data Architect for University Information,University Information Technology,Data,Success,Archived (Dry Run),CN000487826,N/A,Position Filled
+11/21/2025 19:22,P250251,Application Development Analyst,Information Technology,Data,Success,Archived (Dry Run),CN000493795,N/A,Position Filled
