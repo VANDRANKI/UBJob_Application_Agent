@@ -20,7 +20,7 @@ def apply_to_job(page: Page, job_data, resume_path, cover_letter_path, personal_
                     
         if not apply_btn:
             print("Could not find Apply button.")
-            return False
+            return "failed"
             
         apply_btn.click()
         page.wait_for_load_state("networkidle")
@@ -157,8 +157,8 @@ def apply_to_job(page: Page, job_data, resume_path, cover_letter_path, personal_
         
         page.wait_for_load_state("networkidle")
         print("Application Submitted!")
-        return True
-        
+        return "applied"
+
     except Exception as e:
         print(f"Error applying to {job_data['Job_ID']}: {e}")
-        return False
+        return "failed"
