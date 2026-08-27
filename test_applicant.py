@@ -18,11 +18,13 @@ class FakePage:
     apply_to_job's control flow (query_selector/goto/fill/click/
     wait_for_load_state/url)."""
 
-    def __init__(self, has_apply_button=True, raise_on_goto=False):
+    def __init__(self, has_apply_button=True, raise_on_goto=False, fail_selector_containing=None):
         self.url = "https://www.ubjobs.buffalo.edu/postings/123456"
         self._has_apply_button = has_apply_button
         self._raise_on_goto = raise_on_goto
+        self._fail_selector_containing = fail_selector_containing
         self.clicked_selectors = []
+        self.filled_selectors = []
 
     def goto(self, url):
         if self._raise_on_goto:
@@ -39,7 +41,9 @@ class FakePage:
         pass
 
     def fill(self, selector, value):
-        pass
+        self.filled_selectors.append(selector)
+        if self._fail_selector_containing and self._fail_selector_containing in selector:
+            raise TimeoutError(f"selector not found on this posting's form: {selector}")
 
     def click(self, selector):
         self.clicked_selectors.append(selector)
@@ -55,6 +59,41 @@ def make_personal_info():
         "city": "Potsdam",
         "zip_code": "13676",
     }
+
+
+class TestPersonalInfoFieldsFillIndependently:
+    """Regression: the seven standard personal-info fields (first_name,
+    last_name, email, phone, address, city, zip) used to be wrapped in one
+    shared `try: ... except: pass` block. If any single `page.fill` call
+    raised (e.g. a posting's form names the phone field differently), every
+    field listed after it was silently never even attempted -- no
+    exception, no print, nothing -- and the application went out with the
+    rest of the personal-info section left blank. Each field must now be
+    filled in its own try/except so one bad selector cannot swallow the
+    ones that come after it."""
+
+    def test_one_failing_field_does_not_block_the_rest(self):
+        page = FakePage(has_apply_button=True, fail_selector_containing="phone")
+        job_data = {"Link": "https://example.test/job/4", "Job_ID": "4"}
+        result = apply_to_job(page, job_data, None, None, make_personal_info())
+
+        # The failing field was attempted...
+        assert any("phone" in s for s in page.filled_selectors)
+        # ...but address/city/zip, which come after phone in the form,
+        # must still have been attempted despite the earlier failure.
+        assert any("address" in s for s in page.filled_selectors)
+        assert any("city" in s for s in page.filled_selectors)
+        assert any("zip" in s for s in page.filled_selectors)
+        # A field-level failure is not a fatal error for the whole application.
+        assert result == "applied"
+
+    def test_all_fields_attempted_when_none_fail(self):
+        page = FakePage(has_apply_button=True)
+        job_data = {"Link": "https://example.test/job/5", "Job_ID": "5"}
+        apply_to_job(page, job_data, None, None, make_personal_info())
+
+        for expected in ["first_name", "last_name", "email", "phone", "address", "city", "zip"]:
+            assert any(expected in s for s in page.filled_selectors), f"{expected} was never attempted"
 
 
 class TestApplyToJobReturnValue:

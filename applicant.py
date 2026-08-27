@@ -34,16 +34,28 @@ def apply_to_job(page: Page, job_data, resume_path, cover_letter_path, personal_
         
         # 1. Personal Information (Usually pre-filled or standard fields)
         # We'll first attempt to fill standard fields if they exist and are empty
-        try:
-            page.fill("input[name*='first_name']", personal_info['first_name'])
-            page.fill("input[name*='last_name']", personal_info['last_name'])
-            page.fill("input[name*='email']", personal_info['email'])
-            page.fill("input[name*='phone']", personal_info['phone'])
-            page.fill("input[name*='address']", personal_info['address'])
-            page.fill("input[name*='city']", personal_info['city'])
-            page.fill("input[name*='zip']", personal_info['zip_code'])
-        except:
-            pass # Fields might be different or pre-filled
+        #
+        # Each field gets its own try/except instead of one try/except around
+        # the whole block. A single bare `except: pass` around all seven
+        # fills meant that if an earlier selector didn't match (e.g. the
+        # 'phone' field name differs on some posting's form), every field
+        # after it in the list -- address, city, zip -- was silently never
+        # even attempted, with no error, no print, nothing in the logs to
+        # explain why the application went out with half the form blank.
+        standard_fields = [
+            ("input[name*='first_name']", personal_info['first_name']),
+            ("input[name*='last_name']", personal_info['last_name']),
+            ("input[name*='email']", personal_info['email']),
+            ("input[name*='phone']", personal_info['phone']),
+            ("input[name*='address']", personal_info['address']),
+            ("input[name*='city']", personal_info['city']),
+            ("input[name*='zip']", personal_info['zip_code']),
+        ]
+        for selector, value in standard_fields:
+            try:
+                page.fill(selector, value)
+            except Exception as e:
+                print(f"Could not fill '{selector}' (field might be different or pre-filled): {e}")
             
         # 2. Education History
         # Logic: Look for "Add Educational History Entry" button
