@@ -8,6 +8,15 @@ from docx import Document
 from docx.shared import Pt
 from openai import OpenAI
 
+# `client = OpenAI()` below reads OPENAI_API_KEY straight from the process
+# environment, and DEFAULT_MODEL reads OPENAI_MODEL the same way. Both used
+# to depend on some other, already-imported module (config.py) having called
+# load_dotenv() first as a side effect - this module imported load_dotenv
+# but never called it. Importing generator.py on its own therefore crashed
+# with OpenAIError even with a valid key sitting in .env. Call it here so
+# this module loads its own environment regardless of import order.
+load_dotenv()
+
 DEFAULT_OUTPUT_DIR = "generated_docs"
 DEFAULT_TEMPLATE_PATH = "templates/cover_template.docx"
 DEFAULT_MODEL = os.getenv("OPENAI_MODEL", "gpt-5-mini-2025-08-07")
