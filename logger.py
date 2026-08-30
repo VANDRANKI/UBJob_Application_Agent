@@ -16,15 +16,21 @@ def init_log():
 
 def log_job(job_data):
     init_log()
-    df = pd.read_csv(LOG_FILE)
-    
+    # Job_ID must be read back as a string, not inferred. Without dtype=str,
+    # pandas reads an all-digit Job_ID column as int64, which silently
+    # strips leading zeros (e.g. "00123" becomes 123). The very next
+    # duplicate check below then compares the incoming string ID against
+    # that stripped value, never finds a match, and re-logs the same job
+    # as new every single time instead of returning False.
+    df = pd.read_csv(LOG_FILE, dtype={"Job_ID": str})
+
     # Check if job already exists
     if str(job_data["Job_ID"]) in df["Job_ID"].astype(str).values:
         return False # Already logged
-        
+
     new_row = {
         "Date_Discovered": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        "Job_ID": job_data.get("Job_ID"),
+        "Job_ID": str(job_data.get("Job_ID")),
         "Job_Title": job_data.get("Job_Title"),
         "Department": job_data.get("Department"),
         "Resume_Type": job_data.get("Resume_Type", "Pending"),
@@ -41,7 +47,10 @@ def log_job(job_data):
 
 def update_status(job_id, status, notes=""):
     init_log()
-    df = pd.read_csv(LOG_FILE)
+    # Same dtype=str requirement as log_job: without it, a leading-zero
+    # Job_ID read back from the CSV as int64 will never match str(job_id),
+    # so the status update silently no-ops on that row.
+    df = pd.read_csv(LOG_FILE, dtype={"Job_ID": str})
     mask = df["Job_ID"].astype(str) == str(job_id)
     if mask.any():
         df.loc[mask, "Status"] = status
