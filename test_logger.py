@@ -3,9 +3,19 @@ from pathlib import Path
 
 import pandas as pd
 
+# logger.py itself does `from .config import LOGS_DIR`, a relative import,
+# so it can only be imported as part of a package, not as a bare top-level
+# module the way applicant.py/matcher.py are in the sibling test files (those
+# two have no relative imports of their own). The parent.parent sys.path
+# insert below is therefore correct: it puts this repo's parent directory on
+# sys.path so the repo folder can be imported as a package. The bug was the
+# package name used afterwards, `ubjob_`, which matches no directory in this
+# repo -- the actual package is named after this folder,
+# UBJob_Application_Agent. Every collection of this file failed with
+# ModuleNotFoundError: No module named 'ubjob_', so none of its tests ever ran.
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-import ubjob_.logger as logger
+import UBJob_Application_Agent.logger as logger
 
 
 def make_job(job_id, title="Data Analyst", dept="CS"):
