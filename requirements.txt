@@ -5,3 +5,8 @@ python-docx>=1.1.2
 python-dotenv>=1.0.1
 openpyxl
 beautifulsoup4
+
+# test dependency: this repo ships test_applicant.py, test_generator.py,
+# test_logger.py and test_matcher.py, but pytest itself was never listed
+# here, so a clean `pip install -r requirements.txt` cannot run the suite.
+pytest
