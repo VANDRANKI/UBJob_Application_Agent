@@ -1,6 +1,4 @@
-from playwright.sync_api import sync_playwright
-import time
-from .config import USERNAME, PASSWORD, LOGIN_URL, HEADLESS
+from .config import USERNAME, PASSWORD, LOGIN_URL
 
 def login(page):
     print(f"Navigating to {LOGIN_URL}...")

@@ -1,8 +1,3 @@
-from playwright.sync_api import sync_playwright
-import time
-from .config import HEADLESS
-from .logger import log_job
-
 SEARCH_URL = "https://www.ubjobs.buffalo.edu/postings/search"
 
 def scrape_jobs(page):
