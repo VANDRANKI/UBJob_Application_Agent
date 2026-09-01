@@ -1,6 +1,16 @@
+import sys
 from pathlib import Path
 
-from applicant import apply_to_job
+# The empty __init__.py at the repo root turns this directory into a package,
+# so pytest's default import mode resolves this test module as
+# UBJob_Application_Agent.test_applicant and only puts the *parent* of this
+# repo on sys.path, not this directory itself. A bare `from applicant import
+# ...` therefore raised ModuleNotFoundError: No module named 'applicant' in
+# CI on every run (test_logger.py hit the same problem and already works
+# around it this way).
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+from UBJob_Application_Agent.applicant import apply_to_job
 
 
 class FakeElement:

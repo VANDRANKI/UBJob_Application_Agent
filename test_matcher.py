@@ -1,5 +1,15 @@
-from matcher import determine_resume_type, count_matches, KEYWORDS
-from config import RESUME_PATHS
+import sys
+from pathlib import Path
+
+# See test_applicant.py / test_logger.py: the repo root's __init__.py makes
+# pytest resolve this module as UBJob_Application_Agent.test_matcher without
+# putting this directory itself on sys.path, so a bare `from matcher import
+# ...` raised ModuleNotFoundError: No module named 'matcher' in CI on every
+# run.
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+from UBJob_Application_Agent.matcher import determine_resume_type, count_matches, KEYWORDS
+from UBJob_Application_Agent.config import RESUME_PATHS
 
 
 class TestCountMatches:
