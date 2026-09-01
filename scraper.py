@@ -69,7 +69,7 @@ def scrape_jobs(page):
                           page.query_selector("li:has-text('Department') span.value")
                 if dept_el:
                     department = dept_el.inner_text().strip()
-            except:
+            except Exception:
                 pass
             
             # Description

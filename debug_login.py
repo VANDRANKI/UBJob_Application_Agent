@@ -20,7 +20,7 @@ def debug_login():
         # Try specific selector for the sidebar link
         try:
             page.click("text=Log In /Create Account")
-        except:
+        except Exception:
             print("Could not find 'Log In /Create Account', trying generic 'Log In'...")
             page.click("text=Log In")
             
@@ -32,7 +32,7 @@ def debug_login():
         try:
             page.wait_for_selector("input[id='user_username']", timeout=5000)
             print("   Username field found.")
-        except:
+        except Exception:
             print("   ERROR: Username field NOT found within timeout.")
             # Dump HTML to see what's there
             with open("debug_login_page_source.html", "w", encoding="utf-8") as f:
