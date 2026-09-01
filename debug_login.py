@@ -1,6 +1,5 @@
 from playwright.sync_api import sync_playwright
 import time
-import os
 
 # Credentials from config (hardcoded for debug to be sure)
 # I will read them from config to match the bot's behavior

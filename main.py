@@ -1,4 +1,3 @@
-import sys
 import os
 from playwright.sync_api import sync_playwright
 from .config import HEADLESS, RESUME_PATHS, PERSONAL_INFO
