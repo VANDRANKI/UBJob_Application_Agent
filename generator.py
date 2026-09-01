@@ -8,9 +8,9 @@ from docx import Document
 from docx.shared import Pt
 from openai import OpenAI
 
-# `client = OpenAI()` below reads OPENAI_API_KEY straight from the process
-# environment, and DEFAULT_MODEL reads OPENAI_MODEL the same way. Both used
-# to depend on some other, already-imported module (config.py) having called
+# `OpenAI()` reads OPENAI_API_KEY straight from the process environment,
+# and DEFAULT_MODEL reads OPENAI_MODEL the same way. Both used to depend on
+# some other, already-imported module (config.py) having called
 # load_dotenv() first as a side effect - this module imported load_dotenv
 # but never called it. Importing generator.py on its own therefore crashed
 # with OpenAIError even with a valid key sitting in .env. Call it here so
@@ -21,7 +21,21 @@ DEFAULT_OUTPUT_DIR = "generated_docs"
 DEFAULT_TEMPLATE_PATH = "templates/cover_template.docx"
 DEFAULT_MODEL = os.getenv("OPENAI_MODEL", "gpt-5-mini-2025-08-07")
 
-client = OpenAI()
+# The client used to be built at module level (`client = OpenAI()`), which
+# reads and validates OPENAI_API_KEY the moment this module is imported.
+# .env is (rightly) gitignored and not present in CI or on a fresh clone, so
+# every import of generator.py there raised OpenAIError before any function
+# in this module was ever called, whether or not the caller actually needed
+# to generate a cover letter. Built lazily instead: the key is only required
+# when generate_cover_letter_body_llm() actually runs.
+_client: Optional[OpenAI] = None
+
+
+def _get_client() -> OpenAI:
+    global _client
+    if _client is None:
+        _client = OpenAI()
+    return _client
 
 
 def _skills_highlight_by_resume_type(resume_type: str) -> str:
@@ -98,7 +112,7 @@ If a custom template/prompt is provided, follow it:
 {template_prompt or "None"}
 """.strip()
 
-    resp = client.responses.create(
+    resp = _get_client().responses.create(
         model=model,
         input=[
             {"role": "system", "content": system_prompt},
