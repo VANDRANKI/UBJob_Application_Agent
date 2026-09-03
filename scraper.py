@@ -69,8 +69,8 @@ def scrape_jobs(page):
                           page.query_selector("li:has-text('Department') span.value")
                 if dept_el:
                     department = dept_el.inner_text().strip()
-            except Exception:
-                pass
+            except Exception as e:
+                print(f"Warning: Could not extract department for {link}: {e}")
             
             # Description
             description = page.inner_text("body")
