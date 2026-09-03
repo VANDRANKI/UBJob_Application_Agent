@@ -1,5 +1,7 @@
 # 🤖 UB Job Application Agent, Built from Scratch
 
+[![Python application](https://github.com/VANDRANKI/UBJob_Application_Agent/actions/workflows/python-app.yml/badge.svg?branch=main)](https://github.com/VANDRANKI/UBJob_Application_Agent/actions/workflows/python-app.yml)
+
 > **"Automating my job search with precision and zero effort."**
 
 ---
