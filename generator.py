@@ -258,8 +258,9 @@ def generate_cover_letter_docx(
         linkedin = personal_info.get("linkedin", "LinkedIn")
         github = personal_info.get("github", "GitHub")
 
-        p = doc.add_paragraph(full_name)
-        p.runs[0].bold = True
+        # add_run() rather than indexing p.runs[0]: with no name in personal_info
+        # the paragraph is empty, has no runs, and runs[0] raised IndexError.
+        doc.add_paragraph().add_run(full_name).bold = True
 
         doc.add_paragraph(f"{location} | {phone}".strip(" |"))
         doc.add_paragraph(email)
