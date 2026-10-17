@@ -14,6 +14,14 @@ def init_log():
         ])
         df.to_csv(LOG_FILE, index=False)
 
+def _read_log():
+    # Read every column as text and keep empty cells as "". With default
+    # parsing, the empty Notes/Submission_Date/Confirmation_Num columns come
+    # back as float64 (writing a string into them is deprecated and will
+    # raise), and a Department such as "NA" is turned into a missing value
+    # and written back blank.
+    return pd.read_csv(LOG_FILE, dtype=str, keep_default_na=False)
+
 def log_job(job_data):
     init_log()
     # Job_ID must be read back as a string, not inferred. Without dtype=str,
@@ -22,7 +30,7 @@ def log_job(job_data):
     # duplicate check below then compares the incoming string ID against
     # that stripped value, never finds a match, and re-logs the same job
     # as new every single time instead of returning False.
-    df = pd.read_csv(LOG_FILE, dtype={"Job_ID": str})
+    df = _read_log()
 
     # Check if job already exists
     if str(job_data["Job_ID"]) in df["Job_ID"].astype(str).values:
@@ -50,7 +58,7 @@ def update_status(job_id, status, notes=""):
     # Same dtype=str requirement as log_job: without it, a leading-zero
     # Job_ID read back from the CSV as int64 will never match str(job_id),
     # so the status update silently no-ops on that row.
-    df = pd.read_csv(LOG_FILE, dtype={"Job_ID": str})
+    df = _read_log()
     mask = df["Job_ID"].astype(str) == str(job_id)
     if mask.any():
         df.loc[mask, "Status"] = status

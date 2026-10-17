@@ -62,3 +62,36 @@ class TestLoggerPreservesJobIdAsString:
         df = pd.read_csv(logger.LOG_FILE, dtype={"Job_ID": str})
         row = df[df["Job_ID"] == "00456"].iloc[0]
         assert row["Status"] == "Applied (Dry Run)"
+
+
+class TestLoggerRoundTripsTextColumns:
+    """Regression: the log was read back with only Job_ID forced to str. The
+    empty Notes, Submission_Date and Confirmation_Num columns came back as
+    float64, so writing a status note or a submission date into them raised a
+    FutureWarning (an error in a future pandas), and a Department of "NA" was
+    parsed as missing and written back blank on the next rewrite."""
+
+    def test_update_status_with_notes_and_submitted_does_not_warn(self, tmp_path):
+        import warnings
+
+        logger.LOG_FILE = str(tmp_path / "jobs_log.csv")
+        logger.log_job(make_job("777"))
+
+        with warnings.catch_warnings():
+            warnings.simplefilter("error", FutureWarning)
+            logger.update_status("777", "Submitted", "sent by hand")
+
+        df = pd.read_csv(logger.LOG_FILE, dtype=str, keep_default_na=False)
+        row = df.iloc[0]
+        assert row["Status"] == "Submitted"
+        assert row["Notes"] == "sent by hand"
+        assert row["Submission_Date"] != ""
+
+    def test_department_na_survives_later_rewrites(self, tmp_path):
+        logger.LOG_FILE = str(tmp_path / "jobs_log.csv")
+        logger.log_job(make_job("1", dept="NA"))
+        logger.log_job(make_job("2", dept="Physics"))
+        logger.update_status("2", "Archived")
+
+        df = pd.read_csv(logger.LOG_FILE, dtype=str, keep_default_na=False)
+        assert df["Department"].tolist() == ["NA", "Physics"]
